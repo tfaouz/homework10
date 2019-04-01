@@ -33,7 +33,14 @@ if ((command === "movie-this") && (!name) {
 //function spotify
 function spotify(command, name)
 
+function spotify() {
+};
 
+function band() {
+};
+
+function omdb() {
+};
 //function omdb
 
 //function band
