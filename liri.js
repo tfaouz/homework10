@@ -1,7 +1,5 @@
 // error won't allow npm of axios, dotenv, moment, keys
 
-var keys = require("./keys.js");
-
 require("dotenv").config();
 
 var keys = require("./keys.js");
@@ -15,32 +13,79 @@ console.log("working");
 
 
 if ((command === "movie-this") && (!name) {
-    movieThingdefault = "Mr.Nobody";
+    movieThingdefault = "Snatch";
     console.log("It's on Netflix!");
-} else if movieCommand((command === "movie-this")) {
-    //omdb*()
+} else if ((command === "movie-this") && (!name)) {
+    omdb();
 } else if (command === "concert-this") {
-    //bandthing
+    band();
     console.log("stuff");
-} else if (commamd === "spotify-this-song") {
-    // spotifyCommand();
+} else if (command === "spotify-this-song") {
+    spotifyCommand();
     console.log("spotify test");
-
 } else {
-    console.log("catch all ");
+    console.log("something went wrong check it again");
 }
 
-//function spotify
-function spotify(command, name)
+function spotifyCommand() {
+    console.log("spotify worked");
 
-function spotify() {
-};
+    spotify.search({
+        type: 'track',
+        query: input,
+        limit: 5
+    })
+        .then(function (response) {
+
+            allTracks = response.tracks.items;
+
+            allTracks.forEach(function (thisTrack) {
+                line();
+                console.log("Song Name: " + thisTrack.name);
+                console.log("Artist's Name: " + thisTrack.artists[0].name);
+                console.log("Albumb Name: " + thisTrack.album.name);
+                console.log("Preview URL: " + thisTrack.external_urls.spotify); //ughh.. it will NOT work damn it.. object object.. argh notation!
+
+            })
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
 
 function band() {
-};
+    //console.log("band worked")
+    axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
+        .then(function (response) {
+            for (i = 0; i <= 9; i++) {
+                var convertedDate = moment(response.data[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
+                line();
+                console.log("Band Name: " + input);
+                console.log("Date of Concert: " + convertedDate);
+                console.log("Venue Name: " + response.data[i].venue.name);
+                console.log("Venue City: " + response.data[i].venue.city);
+            }
+        })
+        .catch(function (error) {
+            //console.log("thingsarentworking")
+            //console.log(error);
+        });
+}
 
-function omdb() {
-};
-//function omdb
 
-//function band
+function omdb(movie) {
+    console.log(movie);
+    console.log("omdb worked")
+    axios.get('https://www.omdbapi.com/?y=&plot=short&apikey=trilogy&t=' + movie)
+        .then(function (response) {
+            line();
+            console.log(response.data.Title,
+                response.data.Year,
+                response.data.Ratings[0],
+                response.data.Ratings[1],
+                response.data.Country,
+                response.data.Plot,
+                response.data.Actors);
+        })
+}
+
