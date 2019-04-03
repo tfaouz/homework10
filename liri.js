@@ -1,5 +1,3 @@
-// error won't allow npm of axios, dotenv, moment, keys
-
 
 var axios = require('axios');
 
@@ -9,18 +7,22 @@ var moment = require('moment');
 
 var keys = require("./keys.js");
 
+var Spotify = require('node-spotify-api');
+
 var spotify = new Spotify(keys.spotify);
+
 
 var command = process.argv[2];
 
 var name = process.argv.slice(3).join(" ");
-console.log("working");
+// console.log("working");
+console.log(process.env.SPOTIFY_ID);
 
 
 if ((command === "movie-this") && (!name)) {
     movieThingdefault = "Snatch";
     console.log("It's on Netflix!");
-} else if ((command === "movie-this") && (!name)) {
+} else if (command === "movie-this") {
     omdb();
 } else if (command === "concert-this") {
     band();
@@ -42,10 +44,10 @@ function spotifyCommand() {
     })
         .then(function (response) {
 
-            allTracks = response.tracks.items;
+            anything = response.tracks.items;
 
-            allTracks.forEach(function (thisTrack) {
-                line();
+            anything.forEach(function (thisTrack) {
+
                 console.log("Song Name: " + thisTrack.name);
                 console.log("Artist's Name: " + thisTrack.artists[0].name);
                 console.log("Albumb Name: " + thisTrack.album.name);
@@ -64,7 +66,7 @@ function band() {
         .then(function (response) {
             for (i = 0; i <= 9; i++) {
                 var convertedDate = moment(response.data[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
-                line();
+
                 console.log("Band Name: " + input);
                 console.log("Date of Concert: " + convertedDate);
                 console.log("Venue Name: " + response.data[i].venue.name);
@@ -83,7 +85,7 @@ function omdb(movie) {
     console.log("omdb worked")
     axios.get('https://www.omdbapi.com/?y=&plot=short&apikey=trilogy&t=' + movie)
         .then(function (response) {
-            line();
+
             console.log(response.data.Title,
                 response.data.Year,
                 response.data.Ratings[0],
