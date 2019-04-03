@@ -23,7 +23,7 @@ if ((command === "movie-this") && (!name)) {
     movieThingdefault = "Snatch";
     console.log("It's on Netflix!");
 } else if (command === "movie-this") {
-    omdb();
+    omdb(name);
 } else if (command === "concert-this") {
     band();
     console.log("stuff");
@@ -39,7 +39,7 @@ function spotifyCommand() {
 
     spotify.search({
         type: 'track',
-        query: input,
+        query: name,
         limit: 5
     })
         .then(function (response) {
@@ -62,12 +62,12 @@ function spotifyCommand() {
 
 function band() {
     //console.log("band worked")
-    axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp")
+    axios.get("https://rest.bandsintown.com/artists/" + name + "/events?app_id=codingbootcamp")
         .then(function (response) {
             for (i = 0; i <= 9; i++) {
                 var convertedDate = moment(response.data[i].datetime).format('MMMM Do YYYY, h:mm:ss a');
 
-                console.log("Band Name: " + input);
+                console.log("Band Name: " + name);
                 console.log("Date of Concert: " + convertedDate);
                 console.log("Venue Name: " + response.data[i].venue.name);
                 console.log("Venue City: " + response.data[i].venue.city);
@@ -85,13 +85,15 @@ function omdb(movie) {
     console.log("omdb worked")
     axios.get('https://www.omdbapi.com/?y=&plot=short&apikey=trilogy&t=' + movie)
         .then(function (response) {
+            //trying to get the object 
+            console.log(response.data);
 
-            console.log(response.data.Title,
-                response.data.Year,
-                response.data.Ratings[0],
-                response.data.Ratings[1],
-                response.data.Country,
-                response.data.Plot,
-                response.data.Actors);
+            // console.log(response.data.Title,
+            //     response.data.Year,
+            //     response.data.Ratings[0],
+            //     response.data.Ratings[1],
+            //     response.data.Country,
+            //     response.data.Plot,
+            //     response.data.Actors);
         })
 }
