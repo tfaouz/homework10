@@ -1,6 +1,11 @@
 // error won't allow npm of axios, dotenv, moment, keys
 
-require("dotenv").config();
+
+var axios = require('axios');
+
+var dotenv = require("dotenv").config(); // ask ta about .config
+
+var moment = require('moment');
 
 var keys = require("./keys.js");
 
@@ -12,7 +17,7 @@ var name = process.argv.slice(3).join(" ");
 console.log("working");
 
 
-if ((command === "movie-this") && (!name) {
+if ((command === "movie-this") && (!name)) {
     movieThingdefault = "Snatch";
     console.log("It's on Netflix!");
 } else if ((command === "movie-this") && (!name)) {
@@ -44,7 +49,7 @@ function spotifyCommand() {
                 console.log("Song Name: " + thisTrack.name);
                 console.log("Artist's Name: " + thisTrack.artists[0].name);
                 console.log("Albumb Name: " + thisTrack.album.name);
-                console.log("Preview URL: " + thisTrack.external_urls.spotify); //ughh.. it will NOT work damn it.. object object.. argh notation!
+                console.log("Preview URL: " + thisTrack.external_urls.spotify);
 
             })
         })
@@ -88,4 +93,3 @@ function omdb(movie) {
                 response.data.Actors);
         })
 }
-
